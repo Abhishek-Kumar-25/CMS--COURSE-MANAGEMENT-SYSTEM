@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSprout - Interactive Learning Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                SkillSprout
+            </a>
+            
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#paths" class="nav-link">Learning Paths</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="register.html" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Get Started
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Learn Smarter,<br>Grow Faster</h1>
+                <p class="hero-subtitle">Master in-demand skills through interactive learning paths, progress tracking, and personalized guidance. Start your journey today with our gamified education platform.</p>
+                <div class="cta-buttons">
+                    <a href="register.html" class="btn btn-primary">
+                        <i class="fas fa-play-circle"></i>
+                        Start Learning Free
+                    </a>
+                    <a href="#features" class="btn btn-outline" style="background: rgba(255,255,255,0.1); color: white; border-color: white;">
+                        <i class="fas fa-chart-line"></i>
+                        See How It Works
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">12K+</span>
+                        <span class="stat-label">Active Learners</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">156</span>
+                        <span class="stat-label">Skills</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="learning-dashboard">
+                    <div class="dashboard-header">
+                        <h3>Your Progress</h3>
+                        <span>Web Development Path</span>
+                    </div>
+                    <div class="progress-ring">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                            <circle class="ring-bg" cx="60" cy="60" r="45"/>
+                            <circle class="ring-progress" cx="60" cy="60" r="45"/>
+                        </svg>
+                        <div class="progress-text">
+                            <span class="progress-percent">75%</span>
+                            <span class="progress-label">Completed</span>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 1rem; color: white;">
+                        <p>🎯 12/16 modules completed</p>
+                        <p>🔥 28-day streak</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="section-header">
+            <h2 class="section-title">Why Learn With SkillSprout?</h2>
+            <p class="section-subtitle">Designed for effective and engaging learning experiences</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h3 class="feature-title">Interactive Learning Paths</h3>
+                <p class="feature-description">Follow carefully designed curricula that build your skills step by step with hands-on projects.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Progressive difficulty levels</li>
+                    <li><i class="fas fa-check"></i> Clear learning objectives</li>
+                    <li><i class="fas fa-check"></i> Real-world projects</li>
+                    <li><i class="fas fa-check"></i> Interactive exercises</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="feature-title">Smart Progress Tracking</h3>
+                <p class="feature-description">Monitor your growth with detailed analytics, skill mastery levels, and personalized insights.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Visual progress indicators</li>
+                    <li><i class="fas fa-check"></i> Skill mastery tracking</li>
+                    <li><i class="fas fa-check"></i> Weekly progress reports</li>
+                    <li><i class="fas fa-check"></i> Personalized recommendations</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3 class="feature-title">Gamified Experience</h3>
+                <p class="feature-description">Stay motivated with achievements, learning streaks, and progress-based rewards.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Daily learning streaks</li>
+                    <li><i class="fas fa-check"></i> Skill badges & trophies</li>
+                    <li><i class="fas fa-check"></i> Progress-based rewards</li>
+                    <li><i class="fas fa-check"></i> Leaderboard challenges</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Paths Section -->
+    <section class="section learning-paths" id="paths">
+        <div class="section-header">
+            <h2 class="section-title">Popular Learning Paths</h2>
+            <p class="section-subtitle">Choose from our carefully crafted learning journeys</p>
+        </div>
+        
+        <div class="paths-grid">
+            <div class="path-card">
+                <div class="path-header">
+                    <div class="path-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="path-title">Full-Stack Web Development</h3>
+                    <p class="path-description">Build modern web applications from front-end to back-end</p>
+                </div>
+                <div class="path-content">
+                    <div class="path-stats">
+                        <div class="path-stat">
+                            <span class="path-stat-number">24</span>
+                            <span class="path-stat-label">Weeks</span>
+                        </div>
+                        <div class="path-stat">
+                            <span class="path-stat-number">156</span>
+                            <span class="path-stat-label">Lessons</span>
+                        </div>
+                        <div class="path-stat">
+                            <span class="path-stat-number">12</span>
+                            <span class="path-stat-label">Projects</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        <i class="fas fa-arrow-right"></i>
+                        Start Learning Path
+                    </a>
+                </div>
+            </div>
+            
+            <div class="path-card">
+                <div class="path-header">
+                    <div class="path-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="path-title">Data Science & Analytics</h3>
+                    <p class="path-description">Master data analysis, visualization, and machine learning</p>
+                </div>
+                <div class="path-content">
+                    <div class="path-stats">
+                        <div class="path-stat">
+                            <span class="path-stat-number">28</span>
+                            <span class="path-stat-label">Weeks</span>
+                        </div>
+                        <div class="path-stat">
+                            <span class="path-stat-number">189</span>
+                            <span class="path-stat-label">Lessons</span>
+                        </div>
+                        <div class="path-stat">
+                            <span class="path-stat-number">15</span>
+                            <span class="path-stat-label">Projects</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        <i class="fas fa-arrow-right"></i>
+                        Start Learning Path
+                    </a>
+                </div>
+            </div>
+            
+            <div class="path-card">
+                <div class="path-header">
+                    <div class="path-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="path-title">UI/UX Design</h3>
+                    <p class="path-description">Create beautiful and user-friendly digital experiences</p>
+                </div>
+                <div class="path-content">
+                    <div class="path-stats">
+                        <div class="path-stat">
+                            <span class="path-stat-number">20</span>
+                            <span class="path-stat-label">Weeks</span>
+                        </div>
+                        <div class="path-stat">
+                            <span class="path-stat-number">142</span>
+                            <span class="path-stat-label">Lessons</span>
+                        </div>
+                        <div class="path-stat">
+                            <span class="path-stat-number">10</span>
+                            <span class="path-stat-label">Projects</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        <i class="fas fa-arrow-right"></i>
+                        Start Learning Path
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Learning Journey?</h2>
+            <p>Join thousands of learners who are mastering new skills and advancing their careers with SkillSprout.</p>
+            <div class="cta-buttons">
+                <a href="register.html" class="btn btn-white">
+                    <i class="fas fa-user-plus"></i>
+                    Create Free Account
+                </a>
+                <a href="login.html" class="btn btn-outline" style="background: transparent; color: white; border-color: white;">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In to Continue
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <i class="fas fa-seedling"></i>
+                    SkillSprout
+                </div>
+                <p class="footer-description">
+                    Transforming learning through interactive paths, progress tracking, and engaging experiences. 
+                    Join our community of lifelong learners.
+                </p>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Platform</h3>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#paths">Learning Paths</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#">Success Stories</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Community</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 SkillSprout. Empowering learners worldwide.</p>
+        </div>
+    </footer>
+
+    <script src="js/index.js"></script>
+</body>
+</html>

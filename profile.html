@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - SkillSprout</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-seedling"></i></div>
+            SkillSprout
+        </a>
+
+        <div class="nav-links">
+            <a href="dashboard.html" class="nav-link"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="courses.html" class="nav-link"><i class="fas fa-book-open"></i> Courses</a>
+            <a href="progress.html" class="nav-link"><i class="fas fa-chart-line"></i> Progress</a>
+            <a href="community.html" class="nav-link"><i class="fas fa-users"></i> Community</a>
+            <a href="profile.html" class="nav-link active"><i class="fas fa-user"></i> Profile</a>
+        </div>
+
+        <div class="user-menu">
+            <div class="user-avatar" id="userAvatar">U</div>
+        </div>
+    </div>
+</nav>
+
+<!-- PROFILE -->
+<div class="profile-container">
+
+    <!-- HEADER -->
+    <div class="profile-header">
+        <div class="profile-info">
+            <div class="profile-avatar" id="profileAvatar">U</div>
+            <div class="profile-details">
+                <h1 id="profileName"></h1>
+                <p id="profileEmail"></p>
+
+                <div class="profile-stats">
+                    <div class="stat-item"><div id="streakCount" class="stat-value">0</div><div class="stat-label">Day Streak</div></div>
+                    <div class="stat-item"><div id="xpCount" class="stat-value">0</div><div class="stat-label">XP</div></div>
+                    <div class="stat-item"><div id="levelCount" class="stat-value">1</div><div class="stat-label">Level</div></div>
+                    <div class="stat-item"><div id="courseCount" class="stat-value">0</div><div class="stat-label">Courses</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <button class="btn btn-primary" onclick="openEditModal()"><i class="fas fa-edit"></i> Edit</button>
+            <button class="btn btn-outline" onclick="shareProfile()"><i class="fas fa-share"></i> Share</button>
+            <button class="btn btn-outline" onclick="exportData()"><i class="fas fa-download"></i> Export</button>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="profile-content">
+
+        <!-- SIDEBAR -->
+        <aside class="profile-sidebar">
+            <nav class="sidebar-nav">
+                <a class="sidebar-link active">Overview</a>
+                <a class="sidebar-link">Achievements</a>
+                <a class="sidebar-link">Courses</a>
+                <a class="sidebar-link">Certificates</a>
+                <a class="sidebar-link" onclick="logout()">Logout</a>
+            </nav>
+
+            <div class="companion-box">
+                <h4>Learning Companion</h4>
+                <div id="companionInfo"></div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="profile-main">
+            <section class="activity-section">
+                <h2>Recent Activity</h2>
+                <div id="activityList"></div>
+            </section>
+
+            <section class="achievements-section">
+                <h2>Achievements</h2>
+                <div id="achievementsGrid"></div>
+            </section>
+
+            <section class="activity-section">
+                <h2>Skills Progress</h2>
+                <div id="skillsList"></div>
+            </section>
+        </main>
+
+    </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal" id="editModal">
+    <div class="modal-content">
+        <h2>Edit Profile</h2>
+        <form id="editProfileForm">
+            <input id="editName" class="form-input" required>
+            <input id="editEmail" class="form-input" required>
+            <textarea id="editBio" class="form-input"></textarea>
+            <textarea id="editGoals" class="form-input"></textarea>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-outline" onclick="closeEditModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- External JS -->
+<script src="js/profile.js"></script>
+</body>
+</html>

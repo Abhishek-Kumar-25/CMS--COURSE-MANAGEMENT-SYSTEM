@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SkillSprout</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+        <p style="color: white; margin-top: 1rem; font-weight: 600;">Loading your learning dashboard...</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                SkillSprout
+            </a>
+            
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link active">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="courses.html" class="nav-link">
+                    <i class="fas fa-book-open"></i> Courses
+                </a>
+                <a href="progress.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Progress
+                </a>
+                <a href="community.html" class="nav-link">
+                    <i class="fas fa-users"></i> Community
+                </a>
+                <a href="profile.html" class="nav-link">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+            </div>
+            
+            <div class="user-menu">
+                <div class="user-avatar" id="userAvatar">
+                    <span id="avatarText">U</span>
+                </div>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <div class="dropdown-item" onclick="goToProfile()">
+                        <i class="fas fa-user-circle"></i>
+                        My Profile
+                    </div>
+                    <div class="dropdown-item" onclick="goToSettings()">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </div>
+                    <div class="dropdown-item" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                        Dark Mode
+                    </div>
+                    <div class="dropdown-item" onclick="goToHelp()">
+                        <i class="fas fa-question-circle"></i>
+                        Help & Support
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item logout" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard -->
+    <div class="dashboard-container">
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h1 id="welcomeMessage">Welcome back, Learner! 👋</h1>
+                    <p>Your learning journey continues. Complete your daily goals and level up your skills today!</p>
+                    <div class="streak-info">
+                        <i class="fas fa-fire" style="color: #f59e0b;"></i> 
+                        <span id="streakDays">7</span>-day learning streak! 🔥 Keep the momentum going!
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Grid -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="learningTime">45 min</h3>
+                        <p>Time learned today</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon secondary">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="lessonsCompleted">12</h3>
+                        <p>Lessons completed</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon accent">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="achievementsCount">5</h3>
+                        <p>Achievements unlocked</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="progressPercentage">85%</h3>
+                        <p>Overall progress</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Continue Learning -->
+            <section class="continue-learning">
+                <div class="section-header">
+                    <h2>Continue Learning</h2>
+                    <a href="courses.html" class="view-all">
+                        View All <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-content">
+                        <div class="course-header">
+                            <div>
+                                <div class="course-title">Web Development Fundamentals</div>
+                                <div class="course-tags">
+                                    <span class="course-tag" style="background: var(--primary-light); color: var(--primary);">HTML</span>
+                                    <span class="course-tag" style="background: #e0e7ff; color: #4f46e5;">CSS</span>
+                                    <span class="course-tag" style="background: #fef3c7; color: #d97706;">JavaScript</span>
+                                </div>
+                            </div>
+                            <div style="color: var(--primary); font-weight: 700; font-size: 1.25rem;">65%</div>
+                        </div>
+                        
+                        <div class="course-progress">
+                            <div class="progress-bar" style="width: 65%"></div>
+                        </div>
+                        
+                        <div class="course-meta">
+                            <span><i class="far fa-file-alt"></i> Lesson 8 of 12</span>
+                            <span><i class="far fa-clock"></i> 25 min left</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommended Courses -->
+            <section class="continue-learning">
+                <div class="section-header">
+                    <h2>Recommended for You</h2>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div class="course-card">
+                        <div class="course-content">
+                            <div class="course-title">Python for Beginners</div>
+                            <div style="color: var(--gray); font-size: 0.875rem; margin-bottom: 1rem;">
+                                Start your programming journey with Python basics
+                            </div>
+                            <div class="course-tags">
+                                <span class="course-tag" style="background: var(--primary-light); color: var(--primary);">Beginner</span>
+                                <span class="course-tag" style="background: #f0f9ff; color: #0ea5e9;">12 hours</span>
+                                <span class="course-tag" style="background: #ecfdf5; color: var(--secondary);">Popular</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card">
+                        <div class="course-content">
+                            <div class="course-title">UI/UX Design Principles</div>
+                            <div style="color: var(--gray); font-size: 0.875rem; margin-bottom: 1rem;">
+                                Create beautiful and user-friendly interfaces
+                            </div>
+                            <div class="course-tags">
+                                <span class="course-tag" style="background: var(--primary-light); color: var(--primary);">Intermediate</span>
+                                <span class="course-tag" style="background: #f0f9ff; color: #0ea5e9;">8 hours</span>
+                                <span class="course-tag" style="background: #f5f3ff; color: var(--accent);">Design</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Learning Companion -->
+            <section class="companion-widget">
+                <div class="companion-avatar" id="companionAvatar">🌳</div>
+                <div class="companion-name" id="companionName">Your Learning Tree</div>
+                <div class="companion-message" id="companionMessage">"Every lesson learned helps me grow stronger. Keep going!"</div>
+                <div class="companion-level">
+                    Level <span id="companionLevel">3</span> • <span id="companionProgress">45%</span> to next level
+                </div>
+            </section>
+
+            <!-- Daily Goals -->
+            <section class="goals-widget">
+                <h3>Daily Goals</h3>
+                
+                <div class="goal-item">
+                    <div class="goal-checkbox checked">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="goal-text completed">Complete 1 lesson</div>
+                </div>
+                
+                <div class="goal-item">
+                    <div class="goal-checkbox checked">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="goal-text completed">Spend 30 minutes learning</div>
+                </div>
+                
+                <div class="goal-item">
+                    <div class="goal-checkbox"></div>
+                    <div class="goal-text">Practice coding exercise</div>
+                </div>
+                
+                <div class="goal-item">
+                    <div class="goal-checkbox"></div>
+                    <div class="goal-text">Review flashcards</div>
+                </div>
+                
+                <div class="goal-item">
+                    <div class="goal-checkbox"></div>
+                    <div class="goal-text">Join a study group</div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h3>Quick Actions</h3>
+                
+                <div class="action-grid">
+                    <a href="courses.html" class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="action-text">Browse Courses</div>
+                    </a>
+                    
+                    <a href="progress.html" class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="action-text">View Progress</div>
+                    </a>
+                    
+                    <a href="community.html" class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="action-text">Achievements</div>
+                    </a>
+                    
+                    <a href="profile.html" class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="action-text">My Profile</div>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast-message" id="toastMessage"></div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

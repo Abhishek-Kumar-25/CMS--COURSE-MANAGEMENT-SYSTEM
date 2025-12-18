@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillSprout | Adaptive Lesson</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/lesson.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="nav">
+  <div class="nav-wrap">
+    <div class="logo">
+      <i class="fa-solid fa-seedling"></i>
+      SkillSprout
+    </div>
+    <span class="badge" id="modeBadge">Beginner</span>
+  </div>
+</nav>
+
+<!-- MAIN LAYOUT -->
+<div class="container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h3>Choose Subject</h3>
+    <select id="subjectSelect">
+      <option value="css">CSS Selectors & Properties</option>
+      <option value="html">HTML Basics</option>
+      <option value="js">JavaScript Fundamentals</option>
+      <option value="db">Database (SQL)</option>
+    </select>
+
+    <button class="btn primary" onclick="loadSubject()">Load Lesson</button>
+
+    <h3>Learning Mode</h3>
+    <div class="modes">
+      <button onclick="setMode('Beginner')">Beginner</button>
+      <button onclick="setMode('Exam')">Exam</button>
+      <button onclick="setMode('Project')">Project</button>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+    <h1 id="lessonTitle"></h1>
+    <p id="lessonIntro"></p>
+
+    <section>
+      <h2>Core Concepts</h2>
+      <ul id="concepts"></ul>
+    </section>
+
+    <section>
+      <h2>Examples</h2>
+      <div id="examples"></div>
+    </section>
+
+    <section>
+      <h2>Exam Tips / Best Practices</h2>
+      <ul id="tips"></ul>
+    </section>
+
+    <section class="check">
+      <h2>Quick Check</h2>
+      <p id="check"></p>
+    </section>
+  </main>
+
+</div>
+
+<!-- JS -->
+<script src="js/lesson.js"></script>
+</body>
+</html>

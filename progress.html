@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Progress - SkillSprout</title>
+
+    <!-- Icons & Fonts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/progress.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-seedling"></i></div>
+            SkillSprout
+        </a>
+
+        <div class="nav-links">
+            <a href="dashboard.html" class="nav-link"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="courses.html" class="nav-link"><i class="fas fa-book-open"></i> Courses</a>
+            <a href="progress.html" class="nav-link active"><i class="fas fa-chart-line"></i> Progress</a>
+            <a href="community.html" class="nav-link"><i class="fas fa-users"></i> Community</a>
+        </div>
+
+        <div class="user-menu">
+            <div class="user-avatar" id="userAvatar">U</div>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN -->
+<div class="progress-container">
+
+    <div class="page-header">
+        <h1 class="page-title">My Learning Progress</h1>
+        <p class="page-subtitle">Track your journey and achievements</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-overview">
+        <div class="stat-card"><div class="stat-value" id="currentStreak">0</div><div class="stat-label">Streak</div></div>
+        <div class="stat-card"><div class="stat-value" id="lessonsCompleted">0</div><div class="stat-label">Lessons</div></div>
+        <div class="stat-card"><div class="stat-value" id="totalHours">0</div><div class="stat-label">Hours</div></div>
+        <div class="stat-card"><div class="stat-value" id="achievementsCount">0</div><div class="stat-label">Achievements</div></div>
+    </div>
+
+    <!-- STREAK -->
+    <div class="progress-section">
+        <h2 class="section-title">Learning Streak</h2>
+        <div class="streak-calendar" id="streakCalendar"></div>
+    </div>
+
+    <!-- COURSES -->
+    <div class="progress-section">
+        <h2 class="section-title">Course Progress</h2>
+        <div class="course-progress-grid">
+            <!-- static course cards already in your design -->
+        </div>
+    </div>
+
+    <!-- ACHIEVEMENTS -->
+    <div class="progress-section">
+        <h2 class="section-title">Achievements</h2>
+        <div class="achievements-grid">
+            <!-- static cards -->
+        </div>
+    </div>
+
+    <!-- GOALS -->
+    <div class="progress-section">
+        <h2 class="section-title">My Learning Goals</h2>
+        <div class="goals-list">
+            <!-- static goals -->
+        </div>
+    </div>
+
+</div>
+
+<!-- External JS -->
+<script src="js/progress.js"></script>
+</body>
+</html>

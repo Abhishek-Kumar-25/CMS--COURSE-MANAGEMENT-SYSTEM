@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - SkillSprout</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Loading Admin Panel...</p>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Admin Layout -->
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="#" class="admin-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    SkillSprout
+                </a>
+                <div class="admin-title">Admin Panel v2.0</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-users"></i>
+                    Users Management
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    Analytics
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-bell"></i>
+                    Notifications
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </nav>
+
+            <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid var(--border);">
+                <div style="font-size: 0.75rem; color: var(--gray); margin-bottom: 0.5rem;">Database Status</div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></div>
+                    <span style="font-size: 0.875rem; font-weight: 500;">Connected</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <h1 class="page-title">Users Management</h1>
+                <div class="page-actions">
+                    <button class="btn btn-export" onclick="exportUsers()">
+                        <i class="fas fa-download"></i>
+                        Export Data
+                    </button>
+                    <button class="btn btn-refresh" onclick="loadUsers()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid" id="statsCards">
+                <!-- Stats will be populated by JavaScript -->
+            </div>
+
+            <!-- Filters Bar -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label class="filter-label">Search Users</label>
+                    <input type="text" class="filter-input" id="searchInput" placeholder="Search by name or email...">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Companion Type</label>
+                    <select class="filter-select" id="companionFilter">
+                        <option value="">All Companions</option>
+                        <option value="tree">🌳 Tree</option>
+                        <option value="dragon">🐉 Dragon</option>
+                        <option value="spirit">✨ Spirit</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Status</label>
+                    <select class="filter-select" id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="locked">Locked</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Sort By</label>
+                    <select class="filter-select" id="sortFilter">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="name">Name A-Z</option>
+                        <option value="email">Email A-Z</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="clearFilters()" style="align-self: flex-end; background: var(--light);">
+                    Clear Filters
+                </button>
+            </div>
+
+            <!-- Users Table -->
+            <div class="users-table-container">
+                <div class="table-header">
+                    <h2 class="table-title">Registered Users</h2>
+                    <div style="color: var(--gray); font-size: 0.875rem;">
+                        Showing <span id="showingCount">0</span> of <span id="totalCount">0</span> users
+                    </div>
+                </div>
+
+                <div id="usersTable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Companion</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersList">
+                            <!-- Users will be populated here -->
+                        </tbody>
+                    </table>
+                    <div id="noUsersMessage" class="no-data" style="display: none;">
+                        <div class="no-data-icon">
+                            <i class="fas fa-users-slash"></i>
+                        </div>
+                        <h3>No Users Found</h3>
+                        <p>No users match your search criteria. Try adjusting your filters.</p>
+                        <button class="btn" onclick="clearFilters()" style="margin-top: 1rem; background: var(--primary); color: white;">
+                            Clear Filters
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination" style="display: none;">
+                    <button class="page-btn" id="prevPage" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div id="pageNumbers"></div>
+                    <button class="page-btn" id="nextPage" disabled>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- User Details Modal -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">User Details</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="user-details-grid" id="userDetails">
+                    <!-- Details will be populated here -->
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button class="btn btn-edit" onclick="editUser()">
+                    <i class="fas fa-edit"></i>
+                    Edit User
+                </button>
+                <button class="btn btn-delete" onclick="deleteUser()">
+                    <i class="fas fa-trash"></i>
+                    Delete User
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

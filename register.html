@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - SkillSprout</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+
+<!-- Animated Background -->
+<div class="background">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-seedling"></i></div>
+            SkillSprout
+        </a>
+    </div>
+</nav>
+
+<!-- Register Card -->
+<div class="auth-container">
+    <div class="auth-card">
+
+        <div class="auth-header">
+            <div class="auth-icon"><i class="fas fa-user-plus"></i></div>
+            <h1 class="auth-title">Start Your Journey</h1>
+            <p class="auth-subtitle">Join thousands of learners mastering new skills</p>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <form id="registerForm">
+
+            <div class="form-group">
+                <label class="form-label"><i class="fas fa-user"></i> Username</label>
+                <div class="form-input-container">
+                    <input type="text" id="username" class="form-input" required>
+                    <i class="fas fa-user form-input-icon"></i>
+                </div>
+                <div id="usernameStatus" class="username-status"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
+                <div class="form-input-container">
+                    <input type="email" id="email" class="form-input" required>
+                    <i class="fas fa-envelope form-input-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"><i class="fas fa-lock"></i> Password</label>
+                <div class="form-input-container">
+                    <input type="password" id="password" class="form-input" required>
+                    <i class="fas fa-key form-input-icon"></i>
+                </div>
+
+                <div class="password-requirements">
+                    <div class="requirement" id="lengthReq"><i class="fas fa-circle"></i> At least 8 characters</div>
+                    <div class="requirement" id="numberReq"><i class="fas fa-circle"></i> Contains a number</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"><i class="fas fa-paw"></i> Choose Companion</label>
+                <div class="companion-options">
+                    <div class="companion-option" data-value="tree">🌳 Tree</div>
+                    <div class="companion-option" data-value="dragon">🐉 Dragon</div>
+                    <div class="companion-option" data-value="spirit">✨ Spirit</div>
+                </div>
+                <input type="hidden" id="companionType">
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-rocket"></i> Create Account
+            </button>
+        </form>
+
+        <div class="divider"><span>or</span></div>
+
+        <button class="btn btn-google">
+            <i class="fab fa-google"></i> Sign up with Google
+        </button>
+
+        <div class="auth-footer">
+            Already have an account? <a href="login.html">Login</a>
+        </div>
+    </div>
+</div>
+
+<!-- External JS -->
+<script src="js/register.js"></script>
+</body>
+</html>
