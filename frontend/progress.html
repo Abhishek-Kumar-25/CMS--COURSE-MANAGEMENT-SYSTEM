@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Progress - SkillSprout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: #334155;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .progress-header {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 6px solid #3b82f6;
+        }
+
+        .header-left h1 {
+            color: #1e293b;
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-left h1 i {
+            color: #3b82f6;
+        }
+
+        .last-updated {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 12px;
+        }
+
+        .user-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 22px;
+            border: 3px solid white;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .user-info h3 {
+            font-size: 18px;
+            color: #1e293b;
+        }
+
+        .user-level {
+            color: #3b82f6;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+        }
+
+        .stat-card.courses::before { background: #3b82f6; }
+        .stat-card.hours::before { background: #10b981; }
+        .stat-card.completion::before { background: #8b5cf6; }
+        .stat-card.streak::before { background: #f59e0b; }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .stat-card.courses .stat-icon { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        .stat-card.hours .stat-icon { background: linear-gradient(135deg, #10b981, #34d399); }
+        .stat-card.completion .stat-icon { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+        .stat-card.streak .stat-icon { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+
+        .stat-change {
+            font-size: 14px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .stat-change.positive { background: #d1fae5; color: #065f46; }
+        .stat-change.negative { background: #fee2e2; color: #991b1b; }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: #1e293b;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        /* MAIN CONTENT */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 992px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* PROGRESS CHART */
+        .chart-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            color: #1e293b;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header h2 i {
+            color: #3b82f6;
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* COURSES PROGRESS */
+        .courses-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .course-item {
+            display: flex;
+            align-items: center;
+            padding: 18px;
+            border-radius: 12px;
+            background: #f8fafc;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            border-left: 4px solid;
+        }
+
+        .course-item:hover {
+            background: #f1f5f9;
+            transform: translateX(5px);
+        }
+
+        .course-item:nth-child(1) { border-left-color: #3b82f6; }
+        .course-item:nth-child(2) { border-left-color: #10b981; }
+        .course-item:nth-child(3) { border-left-color: #8b5cf6; }
+        .course-item:nth-child(4) { border-left-color: #f59e0b; }
+
+        .course-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: white;
+            margin-right: 18px;
+            flex-shrink: 0;
+        }
+
+        .course-item:nth-child(1) .course-icon { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        .course-item:nth-child(2) .course-icon { background: linear-gradient(135deg, #10b981, #34d399); }
+        .course-item:nth-child(3) .course-icon { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+        .course-item:nth-child(4) .course-icon { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+
+        .course-details {
+            flex: 1;
+        }
+
+        .course-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .course-instructor {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .progress-container {
+            margin-top: 10px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 1.5s ease-in-out;
+        }
+
+        .course-item:nth-child(1) .progress-fill { background: linear-gradient(to right, #3b82f6, #60a5fa); }
+        .course-item:nth-child(2) .progress-fill { background: linear-gradient(to right, #10b981, #34d399); }
+        .course-item:nth-child(3) .progress-fill { background: linear-gradient(to right, #8b5cf6, #a78bfa); }
+        .course-item:nth-child(4) .progress-fill { background: linear-gradient(to right, #f59e0b, #fbbf24); }
+
+        /* SIDEBAR */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* ACHIEVEMENTS */
+        .achievements-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .achievement-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .achievement-card.unlocked {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-color: #f59e0b;
+        }
+
+        .achievement-card.locked {
+            opacity: 0.6;
+            filter: grayscale(0.7);
+        }
+
+        .achievement-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #f59e0b;
+        }
+
+        .achievement-card.locked .achievement-icon {
+            color: #94a3b8;
+        }
+
+        .achievement-name {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #1e293b;
+        }
+
+        .achievement-desc {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* CALENDAR */
+        .calendar-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            background: #f1f5f9;
+        }
+
+        .calendar-day.active {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .calendar-day.learning {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            color: white;
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .day-label {
+            color: #64748b;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        /* GOALS */
+        .goals-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .goal-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            border-left: 4px solid #8b5cf6;
+        }
+
+        .goal-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .goal-title {
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .goal-deadline {
+            color: #64748b;
+            font-size: 13px;
+            background: #e2e8f0;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        .goal-progress {
+            margin-top: 10px;
+        }
+
+        /* FOOTER */
+        .progress-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: #3b82f6;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        /* LOADING ANIMATION */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-card, .chart-section, .courses-section, .achievements-section, .calendar-section, .goals-section {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .stat-card:nth-child(2) { animation-delay: 0.1s; }
+        .stat-card:nth-child(3) { animation-delay: 0.2s; }
+        .stat-card:nth-child(4) { animation-delay: 0.3s; }
+        .chart-section { animation-delay: 0.4s; }
+        .courses-section { animation-delay: 0.5s; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .progress-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .achievements-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 5px;
+            }
+            
+            .calendar-day {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="progress-header">
+            <div class="header-left">
+                <h1><i class="fas fa-chart-line"></i> My Learning Progress</h1>
+                <p class="last-updated" id="lastUpdated">Last updated: Just now</p>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar" id="userAvatar">JD</div>
+                <div class="user-info">
+                    <h3 id="userName">John Doe</h3>
+                    <div class="user-level">Level 3 · SkillSprout Learner</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- STATS GRID -->
+        <div class="stats-grid">
+            <div class="stat-card courses">
+                <div class="stat-top">
+                    <div class="stat-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <span class="stat-change positive">+2 this month</span>
+                </div>
+                <div class="stat-value" id="courseCount">5</div>
+                <div class="stat-label">Active Courses</div>
+            </div>
+            <div class="stat-card hours">
+                <div class="stat-top">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <span class="stat-change positive">+8.5h</span>
+                </div>
+                <div class="stat-value" id="totalHours">42.5</div>
+                <div class="stat-label">Hours Learned</div>
+            </div>
+            <div class="stat-card completion">
+                <div class="stat-top">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <span class="stat-change positive">+12%</span>
+                </div>
+                <div class="stat-value" id="avgCompletion">68%</div>
+                <div class="stat-label">Avg. Completion</div>
+            </div>
+            <div class="stat-card streak">
+                <div class="stat-top">
+                    <div class="stat-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <span class="stat-change positive">7 days</span>
+                </div>
+                <div class="stat-value" id="currentStreak">7</div>
+                <div class="stat-label">Day Streak</div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="content-grid">
+            <div class="main-content">
+                <!-- PROGRESS CHART -->
+                <section class="chart-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-chart-bar"></i> Learning Progress</h2>
+                        <select id="timeRange" style="padding: 8px 12px; border-radius: 8px; border: 1px solid #e2e8f0; background: white;">
+                            <option value="week">Last 7 Days</option>
+                            <option value="month">Last 30 Days</option>
+                            <option value="quarter">Last 3 Months</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- COURSES PROGRESS -->
+                <section class="courses-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-spinner"></i> Active Courses</h2>
+                        <button onclick="viewAllCourses()" style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                            View All
+                        </button>
+                    </div>
+                    <div id="coursesList">
+                        <!-- Courses will be loaded here -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+                <!-- ACHIEVEMENTS -->
+                <section class="achievements-section">
+                    <h2><i class="fas fa-medal"></i> Achievements</h2>
+                    <div class="achievements-grid" id="achievementsGrid">
+                        <!-- Achievements loaded by JS -->
+                    </div>
+                </section>
+
+                <!-- CALENDAR -->
+                <section class="calendar-section">
+                    <div class="calendar-header">
+                        <h2><i class="fas fa-calendar-alt"></i> Learning Calendar</h2>
+                        <span id="currentMonth">March 2024</span>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- Calendar loaded by JS -->
+                    </div>
+                </section>
+
+                <!-- GOALS -->
+                <section class="goals-section">
+                    <h2><i class="fas fa-bullseye"></i> Current Goals</h2>
+                    <div class="goal-item">
+                        <div class="goal-header">
+                            <div class="goal-title">Complete Web Dev Course</div>
+                            <div class="goal-deadline">Apr 15</div>
+                        </div>
+                        <div class="goal-progress">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%; background: linear-gradient(to right, #3b82f6, #60a5fa);"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-header">
+                            <div class="goal-title">30-Day Coding Streak</div>
+                            <div class="goal-deadline">Ongoing</div>
+                        </div>
+                        <div class="goal-progress">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>23%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 23%; background: linear-gradient(to right, #10b981, #34d399);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="progress-footer">
+            <p>© 2024 SkillSprout. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="courses.html">Browse Courses</a>
+                <a href="profile.html">My Profile</a>
+                <a href="index.html">Dashboard</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ALL JAVASCRIPT IN ONE PLACE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize everything
+            initProgressPage();
+        });
+
+        function initProgressPage() {
+            // Get or create user data
+            const user = getUserData();
+            
+            // Update UI with user data
+            updateUserInfo(user);
+            loadCourses();
+            loadAchievements();
+            generateCalendar();
+            initCharts();
+            updateLastUpdated();
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+
+        function getUserData() {
+            // Try to get from localStorage
+            let user = JSON.parse(localStorage.getItem('currentUser')) || 
+                      JSON.parse(localStorage.getItem('skillspring_user_JohnDoe')) || 
+                      getDefaultUserData();
+            
+            // Initialize progress if not exists
+            if (!user.progress) {
+                user.progress = getDefaultProgress();
+            }
+            
+            // Save back to localStorage
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            
+            return user;
+        }
+
+        function getDefaultUserData() {
+            return {
+                username: "John Doe",
+                email: "john@example.com",
+                joinDate: "2024-01-15"
+            };
+        }
+
+        function getDefaultProgress() {
+            return {
+                totalHours: 42.5,
+                activeCourses: 5,
+                avgCompletion: 68,
+                currentStreak: 7,
+                lastActive: new Date().toISOString(),
+                achievements: [1, 2, 4, 6],
+                learningHistory: generateLearningHistory(),
+                courses: getDefaultCourses(),
+                goals: getDefaultGoals()
+            };
+        }
+
+        function getDefaultCourses() {
+            return [
+                { 
+                    id: 1, 
+                    title: "Web Development Fundamentals", 
+                    instructor: "Sarah Johnson", 
+                    progress: 85, 
+                    icon: "fa-code",
+                    hours: 12,
+                    lastAccessed: "2024-03-15"
+                },
+                { 
+                    id: 2, 
+                    title: "JavaScript Mastery", 
+                    instructor: "Mike Chen", 
+                    progress: 60, 
+                    icon: "fa-js",
+                    hours: 18,
+                    lastAccessed: "2024-03-14"
+                },
+                { 
+                    id: 3, 
+                    title: "UI/UX Design Principles", 
+                    instructor: "Emma Wilson", 
+                    progress: 45, 
+                    icon: "fa-palette",
+                    hours: 10,
+                    lastAccessed: "2024-03-12"
+                },
+                { 
+                    id: 4, 
+                    title: "Data Science Basics", 
+                    instructor: "Dr. Alex Rivera", 
+                    progress: 30, 
+                    icon: "fa-chart-bar",
+                    hours: 15,
+                    lastAccessed: "2024-03-10"
+                }
+            ];
+        }
+
+        function getDefaultGoals() {
+            return [
+                { title: "Complete Web Dev Course", deadline: "2024-04-15", progress: 85 },
+                { title: "30-Day Coding Streak", deadline: "Ongoing", progress: 23 },
+                { title: "Learn React Framework", deadline: "2024-05-01", progress: 10 }
+            ];
+        }
+
+        function generateLearningHistory() {
+            const history = {};
+            const today = new Date();
+            
+            for (let i = 30; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                
+                // Generate random learning hours between 0.5 and 3.5
+                const hours = Math.random() * 3 + 0.5;
+                history[dateStr] = parseFloat(hours.toFixed(1));
+            }
+            
+            return history;
+        }
+
+        function updateUserInfo(user) {
+            // Update username and avatar
+            document.getElementById('userName').textContent = user.username;
+            document.getElementById('userAvatar').textContent = getInitials(user.username);
+            
+            // Update stats
+            if (user.progress) {
+                document.getElementById('courseCount').textContent = user.progress.activeCourses;
+                document.getElementById('totalHours').textContent = user.progress.totalHours.toFixed(1);
+                document.getElementById('avgCompletion').textContent = user.progress.avgCompletion + '%';
+                document.getElementById('currentStreak').textContent = user.progress.currentStreak;
+            }
+        }
+
+        function getInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        function loadCourses() {
+            const user = getUserData();
+            const courses = user.progress.courses || getDefaultCourses();
+            const coursesList = document.getElementById('coursesList');
+            
+            coursesList.innerHTML = '';
+            
+            courses.forEach(course => {
+                const courseEl = document.createElement('div');
+                courseEl.className = 'course-item';
+                courseEl.innerHTML = `
+                    <div class="course-icon">
+                        <i class="fab ${course.icon || 'fa-book'}"></i>
+                    </div>
+                    <div class="course-details">
+                        <div class="course-title">${course.title}</div>
+                        <div class="course-instructor">By ${course.instructor}</div>
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>${course.progress}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${course.progress}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add click event to view course
+                courseEl.addEventListener('click', () => {
+                    window.location.href = `course.html?id=${course.id}`;
+                });
+                
+                coursesList.appendChild(courseEl);
+            });
+        }
+
+        function loadAchievements() {
+            const achievements = [
+                { id: 1, name: "Fast Learner", desc: "Complete 5 lessons in one day", icon: "fa-bolt", unlocked: true },
+                { id: 2, name: "Week Warrior", desc: "Learn 7 days in a row", icon: "fa-calendar-week", unlocked: true },
+                { id: 3, name: "Course Master", desc: "Complete 3 courses", icon: "fa-graduation-cap", unlocked: false },
+                { id: 4, name: "Early Bird", desc: "Learn before 8 AM", icon: "fa-sun", unlocked: true },
+                { id: 5, name: "Night Owl", desc: "Learn after 10 PM", icon: "fa-moon", unlocked: false },
+                { id: 6, name: "Perfect Score", desc: "Get 100% on a quiz", icon: "fa-star", unlocked: true }
+            ];
+            
+            const achievementsGrid = document.getElementById('achievementsGrid');
+            achievementsGrid.innerHTML = '';
+            
+            achievements.forEach(ach => {
+                const achEl = document.createElement('div');
+                achEl.className = `achievement-card ${ach.unlocked ? 'unlocked' : 'locked'}`;
+                achEl.innerHTML = `
+                    <div class="achievement-icon">
+                        <i class="fas ${ach.icon}"></i>
+                    </div>
+                    <div class="achievement-name">${ach.name}</div>
+                    <div class="achievement-desc">${ach.desc}</div>
+                `;
+                achievementsGrid.appendChild(achEl);
+            });
+        }
+
+        function generateCalendar() {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+            
+            // Update month display
+            document.getElementById('currentMonth').textContent = 
+                today.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            
+            // Get first day of month and total days
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            calendarGrid.innerHTML = '';
+            
+            // Add day labels
+            daysOfWeek.forEach(day => {
+                const dayLabel = document.createElement('div');
+                dayLabel.className = 'day-label';
+                dayLabel.textContent = day;
+                calendarGrid.appendChild(dayLabel);
+            });
+            
+            // Add empty cells for days before first day
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day empty';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day';
+                dayEl.textContent = day;
+                
+                // Mark today
+                if (day === today.getDate() && currentMonth === today.getMonth()) {
+                    dayEl.classList.add('active');
+                }
+                
+                // Randomly mark some days as learning days
+                else if (Math.random() > 0.6 && day <= today.getDate()) {
+                    dayEl.classList.add('learning');
+                }
+                
+                calendarGrid.appendChild(dayEl);
+            }
+        }
+
+        function initCharts() {
+            // Progress Chart
+            const progressCtx = document.getElementById('progressChart').getContext('2d');
+            const progressChart = new Chart(progressCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Hours Learned',
+                        data: [2.5, 3.2, 1.8, 2.9, 3.5, 1.2, 2.8],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + 'h';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Store chart instance for updates
+            window.progressChart = progressChart;
+        }
+
+        function updateLastUpdated() {
+            const now = new Date();
+            const options = { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            };
+            const timeStr = now.toLocaleTimeString('en-US', options);
+            document.getElementById('lastUpdated').textContent = 
+                `Last updated: ${timeStr}`;
+        }
+
+        function setupEventListeners() {
+            // Time range selector
+            document.getElementById('timeRange').addEventListener('change', function(e) {
+                updateChartData(e.target.value);
+            });
+            
+            // Auto-refresh every 30 seconds
+            setInterval(updateLastUpdated, 30000);
+            
+            // Simulate progress updates every minute
+            setInterval(simulateProgressUpdate, 60000);
+        }
+
+        function updateChartData(range) {
+            let labels, data;
+            
+            switch(range) {
+                case 'week':
+                    labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                    data = [2.5, 3.2, 1.8, 2.9, 3.5, 1.2, 2.8];
+                    break;
+                case 'month':
+                    labels = Array.from({length: 30}, (_, i) => `Day ${i+1}`);
+                    data = Array.from({length: 30}, () => Math.random() * 3 + 0.5);
+                    break;
+                case 'quarter':
+                    labels = ['Jan', 'Feb', 'Mar'];
+                    data = [38.5, 42.2, 45.8];
+                    break;
+            }
+            
+            window.progressChart.data.labels = labels;
+            window.progressChart.data.datasets[0].data = data;
+            window.progressChart.update();
+        }
+
+        function simulateProgressUpdate() {
+            // Randomly update stats slightly
+            const user = getUserData();
+            
+            // Small random increase in hours
+            const hourIncrease = Math.random() * 0.2;
+            user.progress.totalHours += hourIncrease;
+            
+            // Update completion if learning
+            if (Math.random() > 0.3) {
+                user.progress.avgCompletion = Math.min(100, user.progress.avgCompletion + Math.random() * 0.5);
+            }
+            
+            // Save updated data
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            
+            // Update display
+            document.getElementById('totalHours').textContent = user.progress.totalHours.toFixed(1);
+            document.getElementById('avgCompletion').textContent = Math.round(user.progress.avgCompletion) + '%';
+            
+            updateLastUpdated();
+        }
+
+        function viewAllCourses() {
+            alert('Redirecting to all courses page...');
+            // In real implementation: window.location.href = 'courses.html';
+        }
+
+        // Export data function
+        window.exportProgressData = function() {
+            const user = getUserData();
+            const dataStr = JSON.stringify(user.progress, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `skillspring-progress-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            alert('Progress data exported successfully!');
+        };
+
+        // Add export button to header (optional)
+        setTimeout(() => {
+            const header = document.querySelector('.progress-header');
+            const exportBtn = document.createElement('button');
+            exportBtn.innerHTML = '<i class="fas fa-download"></i> Export Data';
+            exportBtn.style.cssText = `
+                background: #10b981;
+                color: white;
+                border: none;
+                padding: 10px 16px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                margin-left: 10px;
+            `;
+            exportBtn.onclick = window.exportProgressData;
+            
+            const headerLeft = document.querySelector('.header-left');
+            headerLeft.appendChild(exportBtn);
+        }, 1000);
+    </script>
+</body>
+</html>
